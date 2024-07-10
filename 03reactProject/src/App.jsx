@@ -6,6 +6,8 @@ import "./App.css";
 function App() {
   const [color, setColor] = useState("white");
 
+  console.log(color);
+
   return (
     <div
       style={{ backgroundColor: color }}
