@@ -54,3 +54,46 @@ main {
   cursor: pointer;
   margin-bottom: 10px;
 }
+.singleProduct {
+  align-items: center;
+  display: flex;
+  padding: 20px 10%;
+  justify-content: space-around;
+  margin: 20px 0;
+  flex-wrap: wrap;
+}
+.singleProductImage img {
+  width: 100%;
+  max-width: 400px;
+  border: 1px solid gray;
+}
+
+.singleProductInfo {
+  padding: 0 20px 0 0;
+}
+
+.singeProductButton {
+  padding: 15px 30px;
+  background-color: gold;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+}
+.singeProductButton:hover {
+  background-color: rgb(249, 249, 1);
+  color: black;
+}
+.menu {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 0 20px;
+}
+.second-menu {
+  display: flex;
+  margin-right: 40px;
+  gap: 20px;
+}
+.red {
+  background-color: greenyellow;
+}
