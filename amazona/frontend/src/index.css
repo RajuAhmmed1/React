@@ -11,17 +11,8 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
-
-header {
-  background-color: #404040;
-  padding: 1rem;
-}
-
-header a {
-  color: #ffffff;
-  text-decoration: none;
-  font-weight: bold;
-  font-size: 20px;
+.site-container {
+  min-height: 100vh;
 }
 
 .products {
@@ -43,7 +34,7 @@ header a {
   padding: 0 40px;
 }
 main {
-  padding: 0 15px;
+  flex: 1;
 }
 
 .product-button {
