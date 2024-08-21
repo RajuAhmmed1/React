@@ -36,15 +36,14 @@ code {
 main {
   flex: 1;
 }
-
-.product-button {
-  background-color: gold;
-  padding: 13px 30px;
-  border: none;
-  border-radius: 5%;
-  cursor: pointer;
-  margin-bottom: 10px;
+.rating span {
+  color: #ffc00f;
 }
+.btn-primary {
+  background-color: #f0c040;
+  color: black;
+}
+
 .singleProduct {
   align-items: center;
   display: flex;
@@ -85,6 +84,7 @@ main {
   margin-right: 40px;
   gap: 20px;
 }
-.red {
-  background-color: greenyellow;
+
+.image-large {
+  width: 90%;
 }

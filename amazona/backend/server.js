@@ -7,6 +7,17 @@ app.get("/api/products", (req, res) => {
   res.send(data.products);
 });
 
+app.get("/api/products/slug/:slug", (req, res) => {
+  const singleProduct = data.products.find(
+    (prod) => prod.slug === req.params.slug
+  );
+  if (singleProduct) {
+    res.send(singleProduct);
+  } else {
+    res.status(404).send({ message: "product not found" });
+  }
+});
+
 const port = process.env.PORT || 5001;
 app.listen(port, () => {
   console.log(`serve at http://localhost:${port}`);
