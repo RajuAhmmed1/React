@@ -10,7 +10,7 @@ const data = {
       brand: "Nike",
       rating: 4.5,
       numReviews: 10,
-      descrition: "hight qualuty shirts",
+      description: "hight qualuty shirts",
     },
     {
       name: "Adidas Slim Shirt",
@@ -22,7 +22,7 @@ const data = {
       brand: "Adidas",
       rating: 4.5,
       numReviews: 10,
-      descrition: "hight qualuty shirts",
+      description: "hight qualuty shirts",
     },
     {
       name: "Nike Slim pants",
@@ -32,9 +32,9 @@ const data = {
       price: 120,
       countInStock: 10,
       brand: "Nike",
-      rating: 4.5,
+      rating: 2.5,
       numReviews: 10,
-      descrition: "hight qualuty shirts",
+      description: "hight qualuty shirts",
     },
 
     {
@@ -47,7 +47,7 @@ const data = {
       brand: "Adidas",
       rating: 4.5,
       numReviews: 10,
-      descrition: "hight qualuty shirts",
+      description: "hight qualuty shirts",
     },
   ],
 };
