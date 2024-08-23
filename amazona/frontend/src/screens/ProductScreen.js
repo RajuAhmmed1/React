@@ -9,6 +9,9 @@ import Badge from "react-bootstrap/Badge";
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import { Helmet } from "react-helmet-async";
+import LoadingBox from "../components/LoadingBox";
+import MessageBox from "../components/MessageBox";
+import { getError } from "../untils";
 
 const reducer = (state, action) => {
   switch (action.type) {
@@ -17,6 +20,8 @@ const reducer = (state, action) => {
     case "fetch_success":
       return { ...state, products: action.payload, loading: false };
     case "fetch_fail":
+      console.error("Error fetching data:", action.payload); // For debugging
+
       return { ...state, error: action.payload, loading: false };
     default:
       return state;
@@ -31,23 +36,24 @@ function ProductScreen() {
     products: [],
     loading: true,
   });
+
   useEffect(() => {
     const fetchData = async () => {
       dispatch({ type: "fetch_request" });
-      const result = await axios.get(`/api/products/slug/${slug}`);
       try {
+        const result = await axios.get(`/api/products/slug/${slug}`);
         dispatch({ type: "fetch_success", payload: result.data });
-      } catch (error) {
-        dispatch({ type: "fetch_fail", payload: error.message });
+      } catch (err) {
+        dispatch({ type: "fetch_fail", payload: getError(err) });
       }
     };
     fetchData();
   }, [slug]);
 
   return loading ? (
-    <div>Loading..</div>
+    <LoadingBox />
   ) : error ? (
-    <div>{error}</div>
+    <MessageBox variant="danger">{error}</MessageBox>
   ) : (
     <div>
       <Row>

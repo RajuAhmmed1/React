@@ -1,10 +1,12 @@
-import { Link } from "react-router-dom";
 import { useEffect, useReducer } from "react";
 import axios from "axios";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Products from "../components/Product";
 import { Helmet } from "react-helmet-async";
+import LoadingBox from "../components/LoadingBox";
+import MessageBox from "../components/MessageBox";
+import { getError } from "../untils";
 
 const reducer = (state, action) => {
   switch (action.type) {
@@ -13,6 +15,7 @@ const reducer = (state, action) => {
     case "FETCH_SUCCESS":
       return { ...state, products: action.payload, loading: false };
     case "FETCH_FAIL":
+      console.error("Error fetching data:", action.payload); // For debugging
       return { ...state, loading: false, error: action.payload };
     default:
       return state;
@@ -32,8 +35,8 @@ function HomeScreen() {
       try {
         const result = await axios.get("/api/products");
         dispatch({ type: "FETCH_SUCCESS", payload: result.data });
-      } catch (error) {
-        dispatch({ type: "FETCH_FAIL", payload: error.message });
+      } catch (err) {
+        dispatch({ type: "FETCH_FAIL", payload: getError(err) });
       }
     };
     fetchData();
@@ -47,9 +50,9 @@ function HomeScreen() {
       <h1 className="product-type">Featured Products</h1>
       <div className="products">
         {loading ? (
-          <div>Loading...</div>
+          <LoadingBox />
         ) : error ? (
-          <div>{error}</div>
+          <MessageBox variant="danger">{error}</MessageBox>
         ) : (
           <Row>
             {products.map((prod) => (
