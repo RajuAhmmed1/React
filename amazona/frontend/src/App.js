@@ -23,10 +23,10 @@ function App() {
                 <Navbar.Brand>Dressfair</Navbar.Brand>
               </LinkContainer>
               <Nav className="nav-link">
-                cart
+                Cart
                 {cart.cartItems.length > 0 && (
                   <Badge pill bg="danger">
-                    {cart.cartItems.length}
+                    {cart.cartItems.reduce((a, c) => a + c.quantity, 0)}
                   </Badge>
                 )}
               </Nav>
