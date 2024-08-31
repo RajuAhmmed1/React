@@ -5,15 +5,46 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import MessageBox from "../components/MessageBox";
 import ListGroup from "react-bootstrap/ListGroup";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
+import axios from "axios";
 
 export default function CartScreen() {
+  const navigate = useNavigate();
   const { state, dispatch: cxtDispatch } = useContext(Store);
   const {
     cart: { cartItems },
   } = state; //here state is destructure object which have initialsate object value
+
+  //note: map shows data induvidually as per the id, so when updatehandler fucntion triggers it takes that's product id only
+  const updateCartHandler = async (item, quantity) => {
+    //console.log(item);
+    try {
+      const { data } = await axios.get(`/api/products/${item._id}`); //getting data from the api as per the cart's product id
+      console.log(data);
+      if (data.countInStock < quantity) {
+        window.alert("Sorry. Product is out of stock");
+        console.log("out of stock");
+        return;
+      }
+    } catch (error) {
+      console.error("Error fetching product data:", error);
+    }
+
+    cxtDispatch({
+      type: "CART_ADD_ITEM",
+      payload: { ...item, quantity },
+    });
+  };
+
+  const removeProductHandler = (item) => {
+    cxtDispatch({ type: "CART_REMOVE_ITEM", payload: item });
+  };
+
+  const checkoutHandler = () => {
+    navigate("/signin?redirect=/shipping");
+  };
 
   return (
     <div>
@@ -23,7 +54,7 @@ export default function CartScreen() {
       <h1>Shopping Cart</h1>
       <Row>
         <Col md={8}>
-          {cartItems.lenght === 0 ? (
+          {cartItems.length === 0 ? (
             <MessageBox>
               Cart is empty.<Link to="/">Go Shopping</Link>
             </MessageBox>
@@ -41,11 +72,16 @@ export default function CartScreen() {
                       <Link to={`/products/${a.slug}`}>{a.name}</Link>
                     </Col>
                     <Col md={3}>
-                      <Button variant="light" disabled={a.quantity === 1}>
+                      <Button
+                        onClick={() => updateCartHandler(a, a.quantity - 1)}
+                        variant="light"
+                        disabled={a.quantity === 1}
+                      >
                         <i className="fas fa-minus-circle"></i>
                       </Button>{" "}
                       <span>{a.quantity}</span>{" "}
                       <Button
+                        onClick={() => updateCartHandler(a, a.quantity + 1)}
                         variant="light"
                         disabled={a.quantity === a.countInStock}
                       >
@@ -54,7 +90,10 @@ export default function CartScreen() {
                     </Col>
                     <Col md={3}>${a.price}</Col>
                     <Col md={2}>
-                      <Button variant="light">
+                      <Button
+                        variant="light"
+                        onClick={() => removeProductHandler(a)}
+                      >
                         <i className="fas fa-trash"></i>
                       </Button>
                     </Col>
@@ -79,7 +118,8 @@ export default function CartScreen() {
                   <Button
                     type="button"
                     variant="primary"
-                    disabled={cartItems.lenght === 0}
+                    onClick={checkoutHandler}
+                    disabled={cartItems.length === 0}
                   >
                     Proceed to Checkout
                   </Button>
