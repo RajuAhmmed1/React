@@ -9,6 +9,8 @@ import Badge from "react-bootstrap/Badge";
 import Nav from "react-bootstrap/Nav";
 import { useContext } from "react";
 import { Store } from "./Store";
+import CartScreen from "./screens/CartScreen";
+import { Link } from "react-router-dom";
 
 function App() {
   const { state } = useContext(Store);
@@ -23,12 +25,14 @@ function App() {
                 <Navbar.Brand>Dressfair</Navbar.Brand>
               </LinkContainer>
               <Nav className="nav-link">
-                Cart
-                {cart.cartItems.length > 0 && (
-                  <Badge pill bg="danger">
-                    {cart.cartItems.reduce((a, c) => a + c.quantity, 0)}
-                  </Badge>
-                )}
+                <Link to="/cart" className="nav-link">
+                  Cart
+                  {cart.cartItems.length > 0 && (
+                    <Badge pill bg="danger">
+                      {cart.cartItems.reduce((a, c) => a + c.quantity, 0)}
+                    </Badge>
+                  )}
+                </Link>
               </Nav>
             </Container>
             {/* <div className="second-menu">
@@ -42,7 +46,8 @@ function App() {
         <main>
           <Container className="mt-5">
             <Routes>
-              <Route path="/product/:slug" element={<ProductScreen />} />
+              <Route path="/products/:slug" element={<ProductScreen />} />
+              <Route path="/cart" element={<CartScreen />} />
               <Route path="/" element={<HomeScreen />} />
               <Route path="/About" element={<About />} />
             </Routes>

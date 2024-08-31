@@ -88,3 +88,7 @@ main {
 .image-large {
   width: 90%;
 }
+
+.img-thumbnail {
+  width: 80px;
+}
